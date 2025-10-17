@@ -1,73 +1,179 @@
-# Welcome to your Lovable project
+# Event Management System - MERN Stack
 
-## Project info
+A full-stack Event Management System built with React, Express.js, MongoDB, and TypeScript. Features multi-timezone support, profile management, and event creation with update tracking.
 
-**URL**: https://lovable.dev/projects/052dd2d7-900f-4967-a5cb-9408f6f790f9
+## Features
 
-## How can I edit this code?
+✅ **MERN Stack Implementation**
+- React frontend with TypeScript
+- Express.js backend with ES6 modules
+- MongoDB database with Mongoose ODM
+- Zustand for state management
 
-There are several ways of editing your application.
+✅ **Multi-Timezone Support**
+- Day.js for timezone handling
+- Events display in user's selected timezone
+- Automatic timezone conversion
 
-**Use Lovable**
+✅ **Core Functionality**
+- Create and manage user profiles
+- Create events for multiple profiles
+- View events with timezone conversion
+- Update events with change tracking
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/052dd2d7-900f-4967-a5cb-9408f6f790f9) and start prompting.
+✅ **Bonus Features**
+- Event update logs with timestamps
+- Profile-based event filtering
+- Responsive UI with Tailwind CSS
 
-Changes made via Lovable will be committed automatically to this repo.
+## Tech Stack
 
-**Use your preferred IDE**
+**Frontend:**
+- React 18 with TypeScript
+- Vite for build tooling
+- Zustand for state management
+- Tailwind CSS + shadcn/ui for styling
+- React Hook Form for form handling
+- Day.js for timezone management
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+**Backend:**
+- Express.js with ES6 modules
+- MongoDB with Mongoose
+- CORS for cross-origin requests
+- Input validation and error handling
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Getting Started
 
-Follow these steps:
+### Prerequisites
+- Node.js (v16 or higher)
+- MongoDB (local or cloud instance)
+- npm or yarn
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Installation
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd event-management-system
+   ```
 
-# Step 3: Install the necessary dependencies.
-npm i
+2. **Install dependencies**
+   ```bash
+   npm run install:all
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+3. **Set up environment variables**
+
+   Create a `.env` file in the `backend` directory:
+   ```env
+   MONGODB_URI=mongodb://localhost:27017/event-management
+   PORT=5000
+   NODE_ENV=development
+   ```
+
+4. **Start MongoDB**
+   - For local MongoDB: `mongod`
+   - Or use MongoDB Atlas (cloud)
+
+### Development
+
+**Run both frontend and backend:**
+```bash
+npm run dev:full
+```
+
+**Run only frontend:**
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+**Run only backend:**
+```bash
+npm run backend:dev
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The application will be available at:
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:5000
 
-**Use GitHub Codespaces**
+### Deployment (Vercel)
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. **Set up MongoDB Atlas** (recommended for production)
 
-## What technologies are used for this project?
+2. **Deploy to Vercel:**
+   ```bash
+   vercel --prod
+   ```
 
-This project is built with:
+3. **Set environment variables in Vercel dashboard:**
+   - `MONGODB_URI`: Your MongoDB connection string
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## API Endpoints
 
-## How can I deploy this project?
+### Profiles
+- `GET /api/profiles` - Get all profiles
+- `POST /api/profiles` - Create new profile
+- `PUT /api/profiles/:id` - Update profile
+- `DELETE /api/profiles/:id` - Delete profile
 
-Simply open [Lovable](https://lovable.dev/projects/052dd2d7-900f-4967-a5cb-9408f6f790f9) and click on Share -> Publish.
+### Events
+- `GET /api/events` - Get all events
+- `GET /api/events/profile/:profileId` - Get events for specific profile
+- `POST /api/events` - Create new event
+- `PUT /api/events/:id` - Update event
+- `DELETE /api/events/:id` - Delete event
+- `GET /api/events/:id/logs` - Get event update logs
 
-## Can I connect a custom domain to my Lovable project?
+## Project Structure
 
-Yes, you can!
+```
+├── backend/
+│   ├── models/
+│   │   ├── Profile.js
+│   │   └── Event.js
+│   ├── routes/
+│   │   ├── profiles.js
+│   │   └── events.js
+│   ├── server.js
+│   └── package.json
+├── src/
+│   ├── components/
+│   │   ├── CreateEventForm.tsx
+│   │   ├── EventsList.tsx
+│   │   ├── ProfilesTab.tsx
+│   │   └── ProfileSelector.tsx
+│   ├── store/
+│   │   └── useEventStore.ts
+│   ├── lib/
+│   │   └── api.js
+│   └── pages/
+│       └── Index.tsx
+├── vercel.json
+└── package.json
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Assignment Requirements ✅
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This project meets all the MERN Stack Developer assignment requirements:
+
+1. ✅ **Frontend**: React with TypeScript
+2. ✅ **Backend**: Express.js with API routes
+3. ✅ **Database**: MongoDB with Mongoose
+4. ✅ **State Management**: Zustand (external library)
+5. ✅ **Timezone Management**: Day.js
+6. ✅ **Profile Management**: Admin can create multiple profiles
+7. ✅ **Event Creation**: Events for multiple profiles with timezone selection
+8. ✅ **Multi-timezone Display**: Events display according to user timezone
+9. ✅ **Bonus**: Event update logs with timestamps
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is part of a coding assignment and is available for educational purposes.

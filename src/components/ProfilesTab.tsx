@@ -1,20 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEventStore } from "@/store/useEventStore";
-import { Plus, User } from "lucide-react";
+import { Plus, User, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 export function ProfilesTab() {
   const [newProfileName, setNewProfileName] = useState("");
-  const { profiles, addProfile } = useEventStore();
+  const { profiles, addProfile, fetchProfiles, loading, error, clearError } = useEventStore();
 
-  const handleAddProfile = () => {
+  useEffect(() => {
+    fetchProfiles();
+  }, [fetchProfiles]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      clearError();
+    }
+  }, [error, clearError]);
+
+  const handleAddProfile = async () => {
     if (newProfileName.trim()) {
-      addProfile(newProfileName.trim());
-      setNewProfileName("");
-      toast.success("Profile added successfully");
+      try {
+        await addProfile(newProfileName.trim());
+        setNewProfileName("");
+        toast.success("Profile added successfully");
+      } catch (error) {
+        toast.error("Failed to add profile");
+      }
     }
   };
 
@@ -34,9 +49,14 @@ export function ProfilesTab() {
                 handleAddProfile();
               }
             }}
+            disabled={loading}
           />
-          <Button onClick={handleAddProfile}>
-            <Plus className="mr-2 h-4 w-4" />
+          <Button onClick={handleAddProfile} disabled={loading}>
+            {loading ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Plus className="mr-2 h-4 w-4" />
+            )}
             Add
           </Button>
         </div>
@@ -44,7 +64,7 @@ export function ProfilesTab() {
         <div className="space-y-2">
           {profiles.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
-              No profiles yet. Add your first profile above.
+              {loading ? "Loading profiles..." : "No profiles yet. Add your first profile above."}
             </div>
           ) : (
             profiles.map((profile) => (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useEventStore } from "@/store/useEventStore";
 import { ProfileSelector } from "@/components/ProfileSelector";
 import { CreateEventForm } from "@/components/CreateEventForm";
@@ -7,7 +7,11 @@ import { ProfilesTab } from "@/components/ProfilesTab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Index = () => {
-  const { currentProfile, setCurrentProfile } = useEventStore();
+  const { currentProfile, setCurrentProfile, fetchProfiles } = useEventStore();
+
+  useEffect(() => {
+    fetchProfiles();
+  }, [fetchProfiles]);
 
   return (
     <div className="min-h-screen bg-background">
